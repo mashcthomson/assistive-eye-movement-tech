@@ -70,6 +70,50 @@ IR Sensors (Left / Right / Up / Down)
 
 ---
 
+## About this code
+
+The original 2020 source code was lost. The sketch in `assistive_eye_comm/` is
+a faithful reconstruction of the capstone's documented design, written after
+the original source was lost — it is not the recovered 2020 submission, and it
+has not been re-tested on the physical hardware. See [NOTES.md](NOTES.md) for
+the full disclaimer, known limitations, and calibration guidance.
+
+---
+
+## Wiring
+
+| Connection | Arduino pin |
+|-----------|-------------|
+| IR sensor LEFT (OUT) | A0 |
+| IR sensor RIGHT (OUT) | A1 |
+| IR sensor UP (OUT) | A2 |
+| IR sensor DOWN/BLINK (OUT) | A3 |
+| LCD RS / EN | D12 / D11 |
+| LCD D4 / D5 / D6 / D7 | D5 / D4 / D3 / D2 |
+| Buzzer (+) | D9 |
+
+All modules run off the 5V rail. LCD RW goes to GND, contrast pin to a 10k
+pot. The full pin-by-pin table (including LCD module pin numbers) is in the
+header of `assistive_eye_comm/assistive_eye_comm.ino`.
+
+---
+
+## Building & uploading
+
+**Arduino IDE:** open `assistive_eye_comm/assistive_eye_comm.ino`, select
+*Arduino Uno* as the board, and upload. Only the built-in `LiquidCrystal`
+library is used — nothing extra to install.
+
+**arduino-cli:**
+
+```sh
+arduino-cli core install arduino:avr
+arduino-cli compile --fqbn arduino:avr:uno assistive_eye_comm
+arduino-cli upload --fqbn arduino:avr:uno -p /dev/ttyACM0 assistive_eye_comm
+```
+
+---
+
 ## Results
 
 - **90%+ cost reduction** compared to camera-based AAC systems
